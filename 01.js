@@ -4,16 +4,15 @@ const app = new Vue({
     titulo: "listado de tareas",
     tareas: [],
     nuevaTarea: "",
-    validar:false
+    modificacion:""
   },
 
   methods: {
     agregarTarea() {
       //console.log('diste click ', this.nuevaTarea);
       if (this.nuevaTarea == false) {
-        alert("Ingresa un nombre a tu tarea");
-        return;
-      }else {
+        alert("Ingresa una tarea");
+      } else {
         this.tareas.push({
           nombre: this.nuevaTarea,
           estado: false,
@@ -32,6 +31,14 @@ const app = new Vue({
       this.tareas.splice(index, 1);
       localStorage.setItem("gym-vue", JSON.stringify(this.tareas));
     },
+    editar(index){
+      //console.log("click", index)
+      this.tareas.splice(index, 1, { nombre:this.modificacion, estado:false });
+      this.modificacion="";
+      
+      localStorage.setItem("gym-vue", JSON.stringify(this.tareas));
+
+    }
   },
 
   created: function () {
@@ -42,6 +49,4 @@ const app = new Vue({
       this.tareas = datosDB;
     }
   },
-
-  
 });
